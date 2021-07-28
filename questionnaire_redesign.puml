@@ -1,0 +1,67 @@
+
+@startuml
+ left to right direction
+  enum question_group {
+      basis,
+      imkerei,
+      import
+      pflanzenbau
+     }
+     enum question_type {
+          inspection
+          business
+         }
+
+     enum element_type {
+      single_line_input
+      multi_text_input
+      date_time_input
+      number_input
+      readonly
+      checkbox
+      option
+      rich_text
+      e_signature_input
+      upload
+     }
+     enum answer_type {
+     none
+     radio
+     multi-select
+     dropdown
+     }
+    abstract class Question{
+        +id: uuid
+        +version: string
+        +type:question_type
+        +group: question_group
+       +text: string
+       +isRequired:boolean
+
+    }
+   class AnswerContainer {
+    id: uuid
+    colCount: integer
+    remark: string
+    type: answer_type
+   }
+   class AnswerElement {
+   id: uuid
+   title: string
+   type:element_type
+   variable_binding : string
+   }
+
+    class InspectionQuestion {
+    }
+   InspectionQuestion ..> Question
+   BusinessQuestion ..> Question
+
+   InspectionQuestion --+ AnswerContainer
+   BusinessQuestion --{ AnswerContainer
+    AnswerContainer --{  AnswerElement
+
+
+
+
+@enduml
